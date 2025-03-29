@@ -5,19 +5,24 @@ import "forge-std/Test.sol";
 
 import "src/StakeContract.sol";
 
-contract TestContract is Test {
-    Contract c;
+contract TestStakeContract is Test {
+    StakeContract stake;
 
     function setUp() public {
-        c = new Contract();
+        stake = new StakeContract();
+    }
+    function testStake() public {
+        
+        stake.stake{value:1000}(1000);
+        assertEq(stake.getStakeAmount(), 1000, "Staking failed");
+    }
+    function testUnstake() public{
+      
+        stake.stake{value:1000}(1000);
+        stake.unstake(500);
+        assertEq(stake.getStakeAmount(), 500, "Unstaking failed");
     }
 
-    function testBar() public {
-        assertEq(uint256(1), uint256(1), "ok");
-    }
 
-    function testFoo(uint256 x) public {
-        vm.assume(x < type(uint128).max);
-        assertEq(x + x, x * 2);
-    }
+   
 }

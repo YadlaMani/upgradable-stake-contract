@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 import  "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract Contract {
+contract StakeContract {
     mapping(address=>uint256) stakes;
     uint public totalStakes;
     constructor(){
@@ -17,10 +17,13 @@ contract Contract {
     function unstake(uint _amount)public payable{
         require(_amount>0," Amount must be greater than 0");
         require(stakes[msg.sender]>=_amount,"Not enough stakes");
-        require(address(this).balance>=_amount,"Not enough balance in contract");
+        // require(address(this).balance>=_amount,"Not enough balance in contract");
         payable(msg.sender).transfer(_amount);
         totalStakes-=_amount;
         stakes[msg.sender]-=_amount;
+    }
+    function getStakeAmount() public view returns(uint256){
+        return stakes[msg.sender];
     }
     function claimReward() public payable{
 
