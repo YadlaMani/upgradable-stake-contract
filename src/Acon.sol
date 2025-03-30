@@ -7,7 +7,7 @@ contract Acon is ERC20,Ownable{
     constructor(address _stakingContract) ERC20("Acon","Acon") Ownable(msg.sender){
         stakingContract=_stakingContract;
     }
-    function mint(address _to,uint256 _amount)  public{
+    function mint(address _to,uint256 _amount)  external {
         require(msg.sender==stakingContract,"Only staking contract can mint tokens");
         
         _mint(_to,_amount);
